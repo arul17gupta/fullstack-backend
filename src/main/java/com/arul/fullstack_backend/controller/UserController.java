@@ -1,6 +1,8 @@
 package com.arul.fullstack_backend.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,17 +24,16 @@ public class UserController {
 
 
     @PostMapping("/user")
-    User newUser(@RequestBody User newUser){
-        return userRepository.save(newUser);
+    public ResponseEntity<User> newUser(@RequestBody User newUser) {
+        User savedUser = userRepository.save(newUser);
+        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);  // 201 Created
     }
+
+
 
     @GetMapping("/users")
         List<User> getAllUsers(){
             return userRepository.findAll();
         }
-
-
-
-        
     
 }
